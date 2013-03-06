@@ -31,7 +31,7 @@ func IsValidOrder(order string) bool {
 type KeyAndTag struct {
 	PublicKey string
 	SecretKey string
-	Tag string
+	Tag       string
 }
 
 func GetBrowseNodeLookupUrl(browse_node_id int, key_and_tag KeyAndTag) string {
@@ -124,16 +124,16 @@ type Ancestors struct {
 	BrowseNode []BrowseNode
 }
 type BrowseNode struct {
-	BrowseNodeId	int
-	Name	string
-	IsCategoryRoot	int
-	Children	Children
-	Ancestors	Ancestors
+	BrowseNodeId   int
+	Name           string
+	IsCategoryRoot int
+	Children       Children
+	Ancestors      Ancestors
 }
 type BrowseNodes struct {
 	BrowseNode BrowseNode
 }
 type BrowseNodeLookupResponse struct {
-	XMLName xml.Name `xml:"BrowseNodeLookupResponse"`
-	BrowseNodes   BrowseNodes
+	XMLName     xml.Name `xml:"BrowseNodeLookupResponse"`
+	BrowseNodes BrowseNodes
 }
