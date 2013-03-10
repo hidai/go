@@ -17,7 +17,8 @@ func TestBrowseNodeUnmarshal(t *testing.T) {
 		*secure_key,
 		"hzb-20",
 	}
-	url := GetBrowseNodeLookupUrl(465610, key_and_tag)
+	url := GetBrowseNodeLookupUrl(492168, key_and_tag)
+	fmt.Println(url)
 	xmldata, err := wget.Wget(url)
 	if err != nil {
 		t.Fail()

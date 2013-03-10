@@ -34,14 +34,14 @@ type KeyAndTag struct {
 	Tag       string
 }
 
-func GetBrowseNodeLookupUrl(browse_node_id int, key_and_tag KeyAndTag) string {
+func GetBrowseNodeLookupUrl(browse_node_id uint64, key_and_tag KeyAndTag) string {
 	host := "ecs.amazonaws.jp"
 	path := "/onca/xml"
 	timestamp := time.Now().Format(time.RFC3339)
 	params := "" +
 		"AWSAccessKeyId=" + key_and_tag.PublicKey +
 		"&AssociateTag=" + key_and_tag.Tag +
-		"&BrowseNodeId=" + strconv.Itoa(browse_node_id) +
+		"&BrowseNodeId=" + strconv.FormatUint(browse_node_id, 10) +
 		"&ContentType=" + url.QueryEscape("text/xml") +
 		"&Operation=BrowseNodeLookup" +
 		//"&ResponseGroup=" + url.QueryEscape("MostGifted,NewReleases,MostWishedFor,TopSellers") +
@@ -124,7 +124,7 @@ type Ancestors struct {
 	BrowseNode []BrowseNode
 }
 type BrowseNode struct {
-	BrowseNodeId   int
+	BrowseNodeId   uint64
 	Name           string
 	IsCategoryRoot int
 	Children       Children
