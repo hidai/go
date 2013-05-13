@@ -2,6 +2,7 @@ package wget
 
 import (
 	"appengine"
+	"appengine/memcache"
 	"appengine/urlfetch"
 	"io/ioutil"
 	"net/http"
@@ -19,18 +20,19 @@ func WgetGae(w http.ResponseWriter, context appengine.Context, url string) []byt
 	return body
 }
 
-var proxyCache map[string][]byte
-
 func WgetGaeCached(w http.ResponseWriter, context appengine.Context, url string) []byte {
-	if proxyCache == nil {
-		proxyCache = make(map[string][]byte)
-	}
-	cachedResult, hit := proxyCache[url]
-	if hit {
-		return cachedResult
+	key := "github.com/hidai/go/appengine/wget:" + url
+
+	cachedItem, err := memcache.Get(context, key)
+	if err == nil {
+		return cachedItem.Value
 	}
 
 	data := WgetGae(w, context, url)
-	proxyCache[url] = data
+	newItem := &memcache.Item{
+		Key:   key,
+		Value: data,
+	}
+	memcache.Set(context, newItem)
 	return data
 }
