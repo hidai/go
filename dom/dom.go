@@ -4,8 +4,8 @@ import (
 	"golang.org/x/net/html"
 )
 
-func _getElementsByTagNameAndClass(e *html.Node, tag_name string, class string, result *[]*html.Node) {
-	if tag_name == "" || e.Data == tag_name {
+func _getElementsByTagNameAndClass(e *html.Node, tagName string, class string, result *[]*html.Node) {
+	if tagName == "" || e.Data == tagName {
 		if class == "" {
 			*result = append(*result, e)
 		} else {
@@ -17,19 +17,19 @@ func _getElementsByTagNameAndClass(e *html.Node, tag_name string, class string, 
 		}
 	}
 	for child := e.FirstChild; child != nil; child = child.NextSibling {
-		_getElementsByTagNameAndClass(child, tag_name, class, result)
+		_getElementsByTagNameAndClass(child, tagName, class, result)
 	}
 }
 
-func GetElementsByTagNameAndClass(e *html.Node, tag_name string, class string) []*html.Node {
+func GetElementsByTagNameAndClass(e *html.Node, tagName string, class string) []*html.Node {
 	result := []*html.Node{}
-	_getElementsByTagNameAndClass(e, tag_name, class, &result)
+	_getElementsByTagNameAndClass(e, tagName, class, &result)
 	return result
 }
 
-func GetElementsByTagName(e *html.Node, tag_name string) []*html.Node {
+func GetElementsByTagName(e *html.Node, tagName string) []*html.Node {
 	result := []*html.Node{}
-	_getElementsByTagNameAndClass(e, tag_name, "", &result)
+	_getElementsByTagNameAndClass(e, tagName, "", &result)
 	return result
 }
 
